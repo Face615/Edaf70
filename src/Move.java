@@ -1,27 +1,32 @@
-/*
- * Move.java
- *
- * Version:
- *    $Id$
- *
- * Revisions:
- *    &Log$
- *
+
+/**
+ * Created by aeap and jgeorge on 14/05/14.
  */
 
-/** 
- * This class describes a valid or invalid move in the game of Othello
- * By default, all new Moves are not legal, have no points, and do not have a 
- * valid position on the board.
- *
- * @author     Francis Yuan
- *
- */
+class Move {
 
-public class Move
-{
-	boolean legal = false;
-	int points = 0;
-	int x = -1;
-	int y = -1;
-}  
+	int i, j; // i, position on i axis & j position on j axis
+
+	/**
+	 * Class constructor. Position we want to look at, to create the directions
+	 * on i and j axis
+	 */
+	public Move(int i, int j) {
+		this.i = i;
+		this.j = j;
+	}
+
+	/**
+	 * Gets the location of the position we want to look at on the i axis
+	 */
+	public int getI() {
+		return i;
+	}
+
+	/**
+	 * Gets the location of the position we want to look at on the j axis
+	 */
+	public int getJ() {
+		return j;
+	}
+}

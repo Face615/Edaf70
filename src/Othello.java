@@ -1,390 +1,167 @@
-/*
- * Othello.java
- *
- * Version:
- *    $Id$
- *
- * Revisions:
- *    &Log$
- *
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+/**
+ * Created by pmunoz on 01/04/14. Updated by zwodnik on 09/05/14. Updated by
+ * aeap and jgeorge on 14/05/14.
  */
 
-import java.util.*;
-import java.awt.*;        
-import java.awt.event.*;
-import javax.swing.*;
+public class Othello {
 
-/** 
- * This program is the driver for the game of Othello.<br> 
- *
- * Run the program as one of the following:<br>
- *     java Othello          (GUI with a default delay time of 1 second)<br>
- *     java Othello delay    (GUI with a delay of (delay) milliseconds)<br>
- *     java Othello 0        (GUI with human (Black) vs. machine (White))<br>
- *     java Othello -delay   (No GUI - run program (delay) times)<br>
- *
- * @author     Roxanne Canosa
- *
- */
+	private Board board = new Board(); // creates the board
+	private Player[] players = new Player[2]; // array of players for two
+												// players
+	private Turn turn; // creates a turn
 
-public class Othello extends JPanel 
-{
-    final static int BLACK = 1;          // Declare state of each square
-    final static int WHITE = 2;
-    final static int EMPTY = 0;
-    final static int OFFBOARD = -1;
+	/**
+	 * Driver method for the program. Starts the game.
+	 */
+	public static void main(String[] args) throws IOException {
+		new Othello().startGame();
+	}
 
-    Black black = new Black();          // The players
-    White white = new White();
+	/**
+	 * Starts the game and initializes it with: the first player, a chosen turn
+	 * and the board.
+	 * 
+	 * @throws IOException
+	 */
+	public void startGame() throws IOException /* the game starts */{
 
-    private Game game = new Game();     // Game state
-    private javax.swing.Timer timer;
-    private static int delay;
-    private static long startTime, stopTime, runTime = 0;
-    private int turn = BLACK;
-    private boolean black_done = false; 
-    private boolean white_done = false;
-    
-    /**
-     *  This constructor sets up the initial game configuration, 
-     *  and starts the timer with a default delay of 1 second.
-     */
-    public Othello() { this(1000); }
+		int who = this.initPlayers(); // initializes the first player
+		this.turn = new Turn((who + 1) % 2); // initializes the turn
 
-    /**
-     *  This constructor sets up the initial game configuration, 
-     *  and starts the timer with a user specified delay.
-     *
-     *  @param    delay    number of milliseconds between player moves
-     */
-    public Othello(int delay) {
+		for (int i = 0; i < 2; i++) { // prompts both the players for their
+										// names
+			System.out.print("Player" + (i + 1) + " ");
+			players[i].setNames();
+		}
 
-        // Initialize the game state
-        initGame(game);
-       
-        // Run the game with GUI - computer vs. computer using a timer
-        if (delay > 0) {
-            setBackground(Color.GREEN);
-            timer = new javax.swing.Timer(delay, new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        playerMove();
-                        repaint();
-                    }
-                });
-            
-            // Create the Start and Stop buttons
-            JButton start = new JButton("Start"); 
-            start.setBounds(10,20,80,25); 
-            add(start);
-            start.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent evt){
-                        timer.start();
-                    }
-                });
+		System.out.println(players[0].getName() + " moves"); // indicates who
+																// has to play,
+																// starting with
+																// the player
+																// whose turn it
+																// is
+		this.players[turn.getTurn()].findCanSelect(); // finds the possible
+														// moves for the player
+														// playing
+		board.display(); // displays board
 
-            JButton stop = new JButton("Stop"); 
-            stop.setBounds(10,80,80,25); 
-            add(stop);
-            stop.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent evt){
-                        timer.stop();
-                    }
-                });
-        }
+		while (!board.gameOver()) { // when not GameOver, find the possible
+									// moves from the player
 
-        // Run the game with GUI - human vs. computer. 
-        // The human player always plays with the black discs.
-        if (delay == 0) {
-            setBackground(Color.GREEN);
-            addMouseListener( new MouseAdapter() {
-                    public void mousePressed(MouseEvent evt) {
-                        // Find out which square was clicked
-                        int x = evt.getX();
-                        int y = evt.getY();
-                        int screenWidth = getWidth();
-                        int screenHeight = getHeight();
-                        int column = (x*(game.WIDTH-2))/screenWidth+1;
-                        int row = (y*(game.HEIGHT-2))/screenHeight+1;
-                        
-                        if (!game.legalMove(row,column,BLACK,true)) 
-                           System.out.println("Not a legal move - try again!");
-                        else {
-                            game.board[row][column] = BLACK;
-                            repaint();
-                            black_done = true;
-                            for (int i=1; i<game.HEIGHT-1; i++)
-                                for (int j=1; j<game.WIDTH-1; j++)
-                                    if (game.legalMove(i,j,BLACK,false) )
-                                        black_done=false;
-                            whiteMove();
-                        }
-                    }
-                });
-        }
+			int count = 0; // count of possible moves
+			for (int j = 0; j < Board.NUM; j++)
+				// search the entire board
+				for (int i = 0; i < Board.NUM; i++)
+					if (board.findLegalMoveNew(new Move(i, j), turn.getTurn()) == true) {
+						count++; // add a possible move to the count
+					}
 
-        // Run the game without the GUI - as many times as specified in delay.
-        if (delay < 0) {
+			if (count == 0) { // when no possible moves
+				turn.change(); // change the turn to the other player
+				board.display(); // display the updated board
+				count = 0; // reset count to 0
+			}
 
-            // Start timing how long it takes to play "delay" games
-            startTime = new Date().getTime();
+			else {
+				int row = this.readRow(); // prompts the player for the row
+											// wanted
+				int col = this.readCol(); // prompts the player for the column
+											// wanted
 
-            // Keep track of how many wins each color has
-            int white_won = 0;
-            int black_won = 0;
-            int ties = 0;
+				Move move = new Move(row, col); // creates a new move
+				if (board.canSelect(move)) { // if move valid
+					this.players[turn.getTurn()].placeChip(row, col); // place
+																		// the
+																		// chip
+					turn.change(); // change the turn to the other player
+				}
 
-            // Play a bunch of games!
-            for (int times=0; times < -delay; times++) {
-                initGame(game);
-                boolean done = false;
-                white_done = false;
-                black_done = false;
-         
-                while (!done) {
-                    playerMove();
-                    int bC = 0;
-                    int wC = 0;
+				this.players[turn.getTurn()].findCanSelect(); // find the
+																// possible
+																// moves at the
+																// location
+				board.display(); // display updated board with possible moves
+				System.out
+						.println(players[turn.getTurn()].getName() + " moves"); // indicates
+																				// who
+																				// has
+																				// to
+																				// play
 
-                    for (int i=1; i<game.HEIGHT-1; i++) {        
-                        for (int j=1; j<game.WIDTH-1; j++) {
-                            if (game.board[i][j] == BLACK)       
-                                bC++;
-                            else if (game.board[i][j] == WHITE)   
-                                wC++;
-                        }
-                    }
- 
-                    // Check if there are any more moves to make
-                    done = true;
-                    for (int i=1; i<game.HEIGHT-1; i++)
-                        for (int j=1; j<game.WIDTH-1; j++)
-                            if ((game.legalMove(i,j,BLACK,false)) ||
-                                (game.legalMove(i,j,WHITE,false)))
-                                done=false;    
-                    
-                    if (done) 
-                        if (wC > bC) {
-                            //System.out.println("White won with " + wC);
-                            white_won++;
-                        }
-                        else if (bC > wC) {
-                            //System.out.println("Black won with "+ bC);
-                            black_won++;
-                        }
-                        else {
-                            //System.out.println("Tied game");
-                            ties++;
-                        }
-                }
-            }
+			}
+		}
+	}
 
-            stopTime = new Date().getTime();
-            runTime = (stopTime - startTime);
+	/**
+	 * Creates two players.
+	 * 
+	 * @return 1 if black starts and 0 if white starts
+	 */
+	private int initPlayers() {
+		Turn aux = new Turn(); // temporary turn
 
-            System.out.println("===========================");
-            System.out.println("Total number of games = " + -delay);
-            System.out.println("White won " + white_won + " times");
-            System.out.println("Black won " + black_won + " times");
-            System.out.println("Number of tied games = " + ties);
-            System.out.println("\nWhite lost "+(-delay-white_won) + " times");
-            System.out.print("Runtime for " + -delay + " games = ");
-            System.out.println(runTime + " milliseconds");
-            System.out.println("===========================");
-        }
-    }
-   
-    /** 
-     *  Initialize the game state
-     *
-     *  @param    game    the Game state
-     */
-    public void initGame(Game game) {
+		this.players[0] = new Player("name 1", aux.getTurn(), this.board); // player
+																			// 1
+		aux.change(); // changes to player 2
+		this.players[1] = new Player("name 2", aux.getTurn(), this.board); // player
+																			// 2
 
-        turn = BLACK;
-        //System.out.println("Turn is: " + turn);
-        
-         // Initialize off-board squares
-        for (int i=0; i<game.WIDTH; i++) {     
-            game.board[i][0] = OFFBOARD;
-            game.board[i][game.WIDTH-1] = OFFBOARD;
-            game.board[0][i] = OFFBOARD;
-            game.board[game.HEIGHT-1][i] = OFFBOARD;
-        }
+		if (aux.getTurn() == 0) { // if player is player 1 then start with black
+			return 1;
+		} else {
+			return 0; // start with white
+		}
+	}
 
-        // Initialize game board to be empty except for initial setup
-        for (int i=1; i<game.HEIGHT-1; i++)        
-            for (int j=1; j<game.WIDTH-1; j++)
-			   game.board[i][j] = EMPTY;
-        
-        game.board[game.HEIGHT/2-1][game.WIDTH/2-1] = WHITE;        
-        game.board[game.HEIGHT/2][game.WIDTH/2-1] = BLACK;
-        game.board[game.HEIGHT/2-1][game.WIDTH/2] = BLACK;
-        game.board[game.HEIGHT/2][game.WIDTH/2] = WHITE;
-    }
+	/**
+	 * Reads the row for the move wanted.
+	 * 
+	 * @return the value of the row wanted
+	 */
+	private int readRow() {
+		System.out.print("Select a row: "); // Displays a message asking to
+											// select a row
 
-    /**
-     *  A player makes a move when the Timer goes off. Black goes
-     *  first, and then Black and White take turns.
-     */
-    public void playerMove() {
-        
-        if (turn == BLACK) {
-            blackMove();
-            turn = WHITE;
-        }
-        else {
-            whiteMove();
-            turn = BLACK;
-        }
-    }
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // prompts
+																					// for
+																					// input
+																					// of
+																					// row
+		Integer value = -1;
+		try {
+			value = Integer.parseInt(br.readLine()); // reads the value selected
+		} catch (IOException e) {
+		}
+		return value; // returns the value selected
+	}
 
-    /**
-     *  Black takes a turn.
-     */
-    public void blackMove() {
-       
-        // Check if Black can move anywhere
-        black_done = true;
-        for (int i=1; i<game.HEIGHT-1; i++)
-            for (int j=1; j<game.WIDTH-1; j++)
-                if (game.legalMove(i,j,BLACK,false) ) 
-                    black_done=false;
+	/**
+	 * Reads the column of the move wanted.
+	 * 
+	 * @return the value of the column wanted
+	 */
+	private int readCol() {
+		System.out.print("Select a column: "); // Displays a message asking to
+												// select a column
 
-        game = black.strategy(game, black_done, BLACK);          
-    } 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // prompts
+																					// for
+																					// input
+																					// of
+																					// column
+		Integer value = -1;
+		try {
+			value = Integer.parseInt(br.readLine()); // reads the value selected
+		} catch (IOException e) {
 
-    /**
-     *  White takes a turn.
-     */
-    public void whiteMove() {
+		}
+		return value; // returns value selected
+	}
 
-        // Check if White can move
-        white_done = true;
-        for (int i=1; i<game.HEIGHT-1; i++)
-            for (int j=1; j<game.WIDTH-1; j++)
-                if (game.legalMove(i,j,WHITE,false) )
-                    white_done=false;
-        
-        game = white.strategy(game, white_done, WHITE);
-    }
-
-   /**
-    *  Draw the board and the current state of the game. 
-    *
-    *  @param    g    the graphics context of the game
-    */
-   public void paintComponent(Graphics g) {
-      
-       super.paintComponent(g);  // Fill panel with background color
-       
-       int width = getWidth();
-       int height = getHeight();
-       int xoff = width/(game.WIDTH-2);
-       int yoff = height/(game.HEIGHT-2);
-
-       int bCount=0;                     
-       int wCount=0;                        
-
-       // Draw the lines on the board
-       g.setColor(Color.BLACK);
-       for (int i=1; i<=game.HEIGHT-2; i++) {        
-           g.drawLine(i*xoff, 0, i*xoff, height);
-           g.drawLine(0, i*yoff, width, i*yoff);
-       }
-
-       // Draw discs on the board and show the legal moves
-       for (int i=1; i<game.HEIGHT-1; i++) {        
-           for (int j=1; j<game.WIDTH-1; j++) {
-               // Draw the discs
-               if (game.board[i][j] == BLACK) {       
-                   g.setColor(Color.BLACK);
-                   g.fillOval((j*yoff)-yoff+7,(i*xoff)-xoff+7,50,50); 
-                   bCount++;
-               }
-               else if (game.board[i][j] == WHITE) {  
-                   g.setColor(Color.WHITE);
-                   g.fillOval((j*yoff)-yoff+7,(i*xoff)-xoff+7,50,50);
-                   wCount++;
-               }
-               // Show the legal moves for the current player
-               if (turn == BLACK && game.legalMove(i,j,BLACK,false)) {
-                   g.setColor(Color.BLACK);
-                   g.fillOval((j*yoff+29)-yoff,(i*xoff+29)-xoff,6,6);
-               }
-               // If other player cannot move, current player cleans up
-               if (turn == WHITE && game.legalMove(i,j,WHITE,false)) {
-                   g.setColor(Color.WHITE);
-                   g.fillOval((j*yoff+29)-yoff,(i*xoff+29)-xoff,6,6);
-               }
-           }
-       }
- 
-       // Check if there are any more moves to make
-       boolean done = true;
-       for (int i=1; i<game.HEIGHT-1; i++)
-           for (int j=1; j<game.WIDTH-1; j++)
-               if ((game.legalMove(i,j,BLACK,false)) ||
-                   (game.legalMove(i,j,WHITE,false)))
-                   done=false;
-
-       g.setColor(Color.RED);
-       if (done) {
-           if (wCount > bCount)
-               g.drawString("White won with " + wCount + " discs.",10,20);
-           else if (bCount > wCount)
-               g.drawString("Black won with " + bCount + " discs.",10,20);
-           else g.drawString("Tied game",10,20);
-       }
-       else {     
-           if (wCount > bCount)
-               g.drawString("White is winning with " + wCount+" discs",10,20);
-           else if (bCount > wCount)
-               g.drawString("Black is winning with " + bCount+" discs",10,20);
-           else g.drawString("Currently tied",10,20);
-       }
-      
-   }
-
-    /**
-     * The main program.
-     *
-     * @param    args    command line arguments (ignored)
-     */
-    public static void main(String [] args) {
-		
-        Othello content;
-
-        if (args.length > 1) {
-            System.out.println("Usage: java Othello delayTime");
-            System.exit(0);
-        }
-
-        if (args.length == 1) {   
-            try {
-                delay = Integer.parseInt(args[0]);
-            }
-            catch (NumberFormatException e) {
-                System.out.println("Command line arg must be an integer");
-                System.exit(0);
-            }
-            content = new Othello(delay);
-            if (delay >= 0) {
-                JFrame window = new JFrame("Othello Game");
-                window.setContentPane(content);
-                window.setSize(530,557);
-                window.setLocation(100,100);
-                window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-                window.setVisible(true);
-            }
-        }
-        else {
-            content = new Othello();
-            JFrame window = new JFrame("Othello Game");
-            window.setContentPane(content);
-            window.setSize(530,557);
-            window.setLocation(100,100);
-            window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-            window.setVisible(true);
-        }
-    }
-}  // Othello
+}
