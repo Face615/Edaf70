@@ -47,12 +47,12 @@ public class Game {
 	
 	
 	public int getPlayerScore() {
-		return board.getChipsCount(humanColor);
+		return board.getRealChipCount(humanColor);
 	}
 	
 	
 	public int getAiScore() {
-		return board.getChipsCount(aiColor);
+		return board.getRealChipCount(aiColor);
 	}
 	
 	public void display() {

@@ -284,13 +284,30 @@ public class Board {
 	}
 	
 	public int getRealChipCount(int color) {
-
+		int scoreWhite=0;
+		int scoreBlack=0;
 		for (int i = 0; i < 8; i++) {
+			
 			for (int j = 0; j < 8; j++) {
+				if(cells[i][j].getPlayer()==0) {
+					scoreWhite++;
+					
+				}
+				else if(cells[i][j].getPlayer()==1) {
+					scoreBlack++;
 				
+				}
 			}
+			
+			
 		}
-		return 0;
+		if (color ==0) {
+			return scoreWhite;
+		}
+		else {
+			return scoreBlack;
+		}
+		
 	}
 
 	/**
