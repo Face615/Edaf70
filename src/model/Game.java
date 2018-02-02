@@ -55,6 +55,9 @@ public class Game {
 		return board.getChipsCount(aiColor);
 	}
 	
+	public void display() {
+		board.display();
+	}
 	
 	
 	

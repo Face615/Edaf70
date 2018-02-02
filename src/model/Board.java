@@ -1,6 +1,5 @@
 package model;
 
-
 /**
  * Created by pmunoz and smartinez on 01/04/14.
  * Updated by aeap and jgeorge on 14/05/14.
@@ -24,16 +23,15 @@ public class Board {
 	public final Move downLeft = new Move(-1, 1); // down and left
 	public final Move downRight = new Move(1, 1); // down and right
 
-	final Move directions[] = { up, down, left, right, upLeft, upRight,
-			downLeft, downRight }; // array containing all the directions
-									// possible
+	final Move directions[] = { up, down, left, right, upLeft, upRight, downLeft, downRight }; // array containing all
+																								// the directions
+																								// possible
 
 	/**
 	 * Class constructor.
 	 * 
 	 * Sets the boards Sets both players' starting chips on the board Sets both
-	 * players counter at the start of the game Sets GameOver to false at the
-	 * start
+	 * players counter at the start of the game Sets GameOver to false at the start
 	 */
 	public Board() {
 		for (int i = 0; i < NUM; i++)
@@ -83,9 +81,12 @@ public class Board {
 	/**
 	 * Places a chip on the board.
 	 * 
-	 * @param int color - the color of the player
-	 * @param int row - the row played
-	 * @param int col - the column played
+	 * @param int
+	 *            color - the color of the player
+	 * @param int
+	 *            row - the row played
+	 * @param int
+	 *            col - the column played
 	 */
 	public void placeChip(int color, int row, int col) {
 		this.cells[row][col].placeChip(color);
@@ -96,7 +97,8 @@ public class Board {
 	 * 
 	 * @param Move
 	 *            move - the move played
-	 * @param int player - the player playing
+	 * @param int
+	 *            player - the player playing
 	 * @return boolean true if legal move, false if not
 	 */
 
@@ -125,19 +127,14 @@ public class Board {
 				int jump = 2; // jump one chip
 				try {
 					if (cells[i + iDir][j + jDir].getPlayer() == opponent) {
-						while ((j + (jump * jDir)) > -1
-								&& (j + (jump * jDir)) < 8
-								&& (i + (jump * iDir)) < 8
+						while ((j + (jump * jDir)) > -1 && (j + (jump * jDir)) < 8 && (i + (jump * iDir)) < 8
 								&& (i + (jump * iDir)) > -1) { // search inside
 																// the board
-							if (!cells[i + jump * iDir][j + jump * jDir]
-									.isEmpty()) { // cell must not be empty
-								if (cells[i + jump * iDir][j + jump * jDir]
-										.getPlayer() == playing)
+							if (!cells[i + jump * iDir][j + jump * jDir].isEmpty()) { // cell must not be empty
+								if (cells[i + jump * iDir][j + jump * jDir].getPlayer() == playing)
 									return true; // if player color is found,
 													// then look for a move
-								else if (cells[i + jump * iDir][j + jump * jDir]
-										.isEmpty())
+								else if (cells[i + jump * iDir][j + jump * jDir].isEmpty())
 									break;
 							} else {
 								break;
@@ -156,7 +153,8 @@ public class Board {
 	/**
 	 * Creates a new ArrayList of all the valid moves available.
 	 * 
-	 * @param int color - the color of the player
+	 * @param int
+	 *            color - the color of the player
 	 * @return ArrayList of all validMoves available
 	 */
 	public ArrayList<Move> validMove(int color) {
@@ -204,7 +202,8 @@ public class Board {
 	 * 
 	 * @param Move
 	 *            move - the move played
-	 * @param int player - the player playing
+	 * @param int
+	 *            player - the player playing
 	 */
 	public void replaceChip(Move move, int player) {
 		int opponent = (player + 1) % 2;
@@ -219,9 +218,9 @@ public class Board {
 			int jDir = direction.getCol();
 			boolean possible = false;
 
-			if ((j + jDir) > -1 && (j + jDir) < NUM && (i + iDir) < NUM
-					&& (i + iDir) > -1) { // checks for an opponent in all the
-											// directions
+			if ((j + jDir) > -1 && (j + jDir) < NUM && (i + iDir) < NUM && (i + iDir) > -1) { // checks for an opponent
+																								// in all the
+																								// directions
 				if (cells[i + iDir][j + jDir].getPlayer() == opponent) {
 					possible = true;
 				}
@@ -229,11 +228,11 @@ public class Board {
 
 			if (possible == true) {
 				int jump = 2;
-				while ((j + (jump * jDir)) > -1 && (j + (jump * jDir)) < 8
-						&& (i + (jump * iDir)) < 8 && (i + (jump * iDir)) > -1) { // search
-																					// inside
-																					// the
-																					// board
+				while ((j + (jump * jDir)) > -1 && (j + (jump * jDir)) < 8 && (i + (jump * iDir)) < 8
+						&& (i + (jump * iDir)) > -1) { // search
+														// inside
+														// the
+														// board
 					if (!cells[i + jump * iDir][j + jump * jDir].isEmpty()) // cell
 																			// cannot
 																			// be
@@ -259,7 +258,8 @@ public class Board {
 	/**
 	 * Updates and returns the value of the counter for each player.
 	 * 
-	 * @param int color - the player's color
+	 * @param int
+	 *            color - the player's color
 	 * @return counter for each player
 	 */
 	public int getChipsCount(int color) {
@@ -282,6 +282,16 @@ public class Board {
 
 		return counter[color];
 	}
+	
+	public int getRealChipCount(int color) {
+
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				
+			}
+		}
+		return 0;
+	}
 
 	/**
 	 * Adds up both player's counters and returns the value.
@@ -293,8 +303,8 @@ public class Board {
 	}
 
 	/**
-	 * Checks if the players have made 64 moves in total, which indicates the
-	 * end of the game.
+	 * Checks if the players have made 64 moves in total, which indicates the end of
+	 * the game.
 	 */
 	public boolean gameOver() {
 		int count = 0;
@@ -321,4 +331,6 @@ public class Board {
 		}
 		return false;
 	}
+	
 }
+

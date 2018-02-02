@@ -9,8 +9,8 @@ public class Main {
 		AI ai = new AI(5);
 		
 		Game g = new Game(0);
-		
-		g.getPlayerScore();
+		g.display();
+	System.out.println(	g.getAiScore());
 //		int i = ai.minimax(g, 5, true);
 //		
 //		System.out.println(i);
