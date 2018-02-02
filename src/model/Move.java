@@ -1,3 +1,4 @@
+package model;
 
 /**
  * Created by aeap and jgeorge on 14/05/14.
