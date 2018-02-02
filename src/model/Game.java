@@ -26,6 +26,8 @@ public class Game {
 			humanColor = WHITE;
 			aiColor = BLACK;
 		}
+		board = new Board();
+				
 	
 	}
 	
