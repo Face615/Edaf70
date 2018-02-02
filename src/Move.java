@@ -29,4 +29,7 @@ class Move {
 	public int getJ() {
 		return j;
 	}
+	public String toString() {
+		return "["+this.i+","+this.j+"]";
+	}
 }
