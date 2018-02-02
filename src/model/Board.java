@@ -106,8 +106,8 @@ public class Board {
 		int opponent = (player + 1) % 2; // finds the opponent
 		int playing = player; // player playing
 
-		int i = move.getI(); // get position i axis
-		int j = move.getJ(); // get position j axis
+		int i = move.getRow(); // get position i axis
+		int j = move.getCol(); // get position j axis
 
 		if (cells[i][j].isEmpty() == false) { // checks if cell is empty
 			return false; // if cell not empty, no moves available
@@ -118,9 +118,9 @@ public class Board {
 
 				Move direction = directions[k]; // direction currently in use is
 												// stored
-				int iDir = direction.getI(); // gets the i axis of the direction
+				int iDir = direction.getRow(); // gets the i axis of the direction
 												// in use
-				int jDir = direction.getJ(); // gets the j axis of the direction
+				int jDir = direction.getCol(); // gets the j axis of the direction
 												// in use
 				int jump = 2; // jump one chip
 				try {
@@ -185,7 +185,7 @@ public class Board {
 	 *            move - the move chosen
 	 */
 	public void setCanSelect(Move move) {
-		this.cells[move.getI()][move.getJ()].setSelect();
+		this.cells[move.getRow()][move.getCol()].setSelect();
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class Board {
 	 * @return true when can be selected, false when not
 	 */
 	public boolean canSelect(Move move) {
-		return this.cells[move.getI()][move.getJ()].canSelect();
+		return this.cells[move.getRow()][move.getCol()].canSelect();
 	}
 
 	/**
@@ -210,13 +210,13 @@ public class Board {
 		int opponent = (player + 1) % 2;
 		int playing = player;
 
-		int i = move.getI();
-		int j = move.getJ();
+		int i = move.getRow();
+		int j = move.getCol();
 
 		for (int movement = 0; movement < directions.length; movement++) {
 			Move direction = directions[movement];
-			int iDir = direction.getI();
-			int jDir = direction.getJ();
+			int iDir = direction.getRow();
+			int jDir = direction.getCol();
 			boolean possible = false;
 
 			if ((j + jDir) > -1 && (j + jDir) < NUM && (i + iDir) < NUM

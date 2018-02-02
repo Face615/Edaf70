@@ -4,33 +4,33 @@ package model;
  * Created by aeap and jgeorge on 14/05/14.
  */
 
-class Move {
+public class Move {
 
-	int i, j; // i, position on i axis & j position on j axis
+	int row, col; // i, position on i axis & j position on j axis
 
 	/**
 	 * Class constructor. Position we want to look at, to create the directions
 	 * on i and j axis
 	 */
 	public Move(int i, int j) {
-		this.i = i;
-		this.j = j;
+		this.row = i;
+		this.col = j;
 	}
 
 	/**
 	 * Gets the location of the position we want to look at on the i axis
 	 */
-	public int getI() {
-		return i;
+	public int getRow() {
+		return row;
 	}
 
 	/**
 	 * Gets the location of the position we want to look at on the j axis
 	 */
-	public int getJ() {
-		return j;
+	public int getCol() {
+		return col;
 	}
 	public String toString() {
-		return "["+this.i+","+this.j+"]";
+		return "["+this.row+","+this.col+"]";
 	}
 }

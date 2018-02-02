@@ -7,14 +7,23 @@ public class Game {
 	private final int WHITE=0;
 	private Board board;
 	
-	private int playerColor;
+	private int humanColor;
 	private int aiColor;
+	
+	public int getPlayerColor() {
+		return humanColor;
+	}
+
+	public int getAiColor() {
+		return aiColor;
+	}
+
 	public Game(int color) {
 		if(color==BLACK) {
-			playerColor = BLACK;
+			humanColor = BLACK;
 			aiColor = WHITE;
 		}else {
-			playerColor = WHITE;
+			humanColor = WHITE;
 			aiColor = BLACK;
 		}
 	
@@ -24,17 +33,24 @@ public class Game {
 		return board.validMove(color);
 	}
 	
+	public Game placeChip(int playerColor, Move move ) {
+		board.placeChip(playerColor, move.getRow(), move.getCol());
+		board.replaceChip(move, playerColor);
+		return this;
+	}
 	
-	
-	
-	
-	public int getBLackScore() {
-		return board.getChipsCount(BLACK);
+	public boolean gameOver() {
+		return board.gameOver();
 	}
 	
 	
-	public int getWhiteScore() {
-		return board.getChipsCount(WHITE);
+	public int getPlayerScore() {
+		return board.getChipsCount(humanColor);
+	}
+	
+	
+	public int getAiScore() {
+		return board.getChipsCount(aiColor);
 	}
 	
 	

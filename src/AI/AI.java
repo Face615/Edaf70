@@ -1,22 +1,44 @@
 package AI;
 import model.Game;
+import model.Move;
 public class AI {
 	
 	private int limit;
+	private Move bestMove;
+	
 	
 	public AI(int limit) {
 		this.limit=limit;
 	}
 	
 	
-	public int maxValue(Game g, int alpha, int beta) {
+	public int minimax(Game g, int depth, boolean isMax) {
 		
-		if(limit ==0) {
-		return g.getWhiteScore();
+		if(depth ==0||g.gameOver()) {
+		return g.getAiScore()-g.getPlayerScore();
+		}
+		
+		if(isMax) {
+			int maxBestV = Integer.MIN_VALUE;
+			for(Move move: g.getLegalMoves(g.getAiColor())) {
+				int v =minimax(g.placeChip(g.getPlayerColor(), move), depth--, false);
+				maxBestV=Integer.max(maxBestV, v);
+				bestMove = move;
+								
+			}
+			return maxBestV;
+		}else {
+			int minBestV = Integer.MAX_VALUE;
+			for(Move move: g.getLegalMoves(g.getPlayerColor())) {
+				int v = minimax(g.placeChip(g.getAiColor(), move), depth--, true);
+				minBestV=Integer.min(minBestV, v);
+			}
+			return minBestV;
+			
 		}
 		
 		
-		return 0;
+
 	}
 	
 }

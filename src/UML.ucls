@@ -1,151 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="Cell" project="EDAF70 Labbar" file="/EDAF70 Labbar/src/Cell.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="132" y="460"/>    
+  <class id="1" language="java" name="model.Game" project="EDAF70 Labbar" file="/EDAF70 Labbar/src/model/Game.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="204" x="138" y="344"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="Move" project="EDAF70 Labbar" file="/EDAF70 Labbar/src/Move.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="886" y="419"/>    
+  <class id="2" language="java" name="model.Cell" project="EDAF70 Labbar" file="/EDAF70 Labbar/src/model/Cell.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="165" y="873"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="Board" project="EDAF70 Labbar" file="/EDAF70 Labbar/src/Board.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="430" y="136"/>    
+  <class id="3" language="java" name="model.Board" project="EDAF70 Labbar" file="/EDAF70 Labbar/src/model/Board.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="555" y="609"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="4">    
+  <class id="4" language="java" name="model.Move" project="EDAF70 Labbar" file="/EDAF70 Labbar/src/model/Move.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="102" x="399" y="982"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="AI.AI" project="EDAF70 Labbar" file="/EDAF70 Labbar/src/AI/AI.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="870" y="871"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="6">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="5" name="right">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </attribute>      
-      <multiplicity id="6" minimum="0" maximum="1">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </multiplicity>    
+      <attribute id="7" name="right"/>      
+      <multiplicity id="8" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="9">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="10" name="up"/>      
+      <multiplicity id="11" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="12">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="13" name="cells"/>      
+      <multiplicity id="14" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="7">    
+  <association id="15">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="8" name="directions">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </attribute>      
-      <multiplicity id="9" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </multiplicity>    
+      <attribute id="16" name="upRight"/>      
+      <multiplicity id="17" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="10">    
+  <association id="18">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="11" name="cells">        
-        <position height="0" width="0" x="-87" y="58"/>      
-      </attribute>      
-      <multiplicity id="12" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-87" y="58"/>      
-      </multiplicity>    
+      <attribute id="19" name="downLeft"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="13">    
+  <association id="21">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="14" name="upRight">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </attribute>      
-      <multiplicity id="15" minimum="0" maximum="1">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </multiplicity>    
+      <attribute id="22" name="upLeft"/>      
+      <multiplicity id="23" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="16">    
+  <association id="24">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="17" name="down">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </attribute>      
-      <multiplicity id="18" minimum="0" maximum="1">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </multiplicity>    
+      <attribute id="25" name="left"/>      
+      <multiplicity id="26" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="19">    
+  <association id="27">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="20" name="upLeft">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </attribute>      
-      <multiplicity id="21" minimum="0" maximum="1">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </multiplicity>    
+      <attribute id="28" name="downRight"/>      
+      <multiplicity id="29" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="22">    
+  <association id="30">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="23" name="downRight">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </attribute>      
-      <multiplicity id="24" minimum="0" maximum="1">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </multiplicity>    
+      <attribute id="31" name="down"/>      
+      <multiplicity id="32" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="25">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="26" name="downLeft">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </attribute>      
-      <multiplicity id="27" minimum="0" maximum="1">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </multiplicity>    
+  <association id="33">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="34" name="board"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="28">    
+  <association id="36">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="29" name="left">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </attribute>      
-      <multiplicity id="30" minimum="0" maximum="1">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </multiplicity>    
+      <attribute id="37" name="directions"/>      
+      <multiplicity id="38" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="31">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="32" name="up">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </attribute>      
-      <multiplicity id="33" minimum="0" maximum="1">        
-        <position height="0" width="0" x="28" y="-117"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
