@@ -78,6 +78,27 @@ public class Board {
 
 	}
 
+	public Board copyBoard() {
+		Board b = new Board();
+		b.setCells(this.cells);
+		b.setCounter(this.counter);
+		return b;
+	}
+	
+	private void setCells( Cell[][] cells) {
+		this.cells = cells;
+	}
+	
+	private void setCounter(int[] counter) {
+		this.counter=counter;
+	}
+	
+
+	public void placeChip(int color, Move move) {
+		this.cells[move.getRow()][move.getCol()].placeChip(color);
+	}
+
+	
 	/**
 	 * Places a chip on the board.
 	 * 

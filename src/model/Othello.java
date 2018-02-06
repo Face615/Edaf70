@@ -2,8 +2,10 @@ package model;
 
 
 import java.io.BufferedReader;
+import AI.AI;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 /**
  * Created by pmunoz on 01/04/14. Updated by zwodnik on 09/05/14. Updated by
@@ -16,6 +18,12 @@ public class Othello {
 	private Player[] players = new Player[2]; // array of players for two
 												// players
 	private Turn turn; // creates a turn
+	private AI ai;
+	
+	public Othello() {
+		this.ai = new AI(3);
+	}
+	
 
 	/**
 	 * Driver method for the program. Starts the game.
@@ -70,11 +78,25 @@ public class Othello {
 			}
 
 			else {
-				int row = this.readRow(); // prompts the player for the row
-											// wanted
-				int col = this.readCol(); // prompts the player for the column
-											// wanted
-
+				int row = 0; // prompts the player for the row
+				// wanted
+				int col = 0; // pro
+			if(turn.getTurn()==1) {
+				row = this.readRow(); // prompts the player for the row
+				// wanted
+				col = this.readCol(); // prompts the player for the column
+				// wanted
+			}else { // AI clause
+				Move m = ai.minimax(board);
+				
+				Random r = new Random();
+				row = r.nextInt(7);
+				// wanted
+				col =r.nextInt(7);
+				
+//				row = m.getRow();
+//				col=m.getCol();
+			}
 				Move move = new Move(row, col); // creates a new move
 				if (board.canSelect(move)) { // if move valid
 					this.players[turn.getTurn()].placeChip(row, col); // place
@@ -165,4 +187,5 @@ public class Othello {
 		return value; // returns value selected
 	}
 
+	
 }

@@ -10,7 +10,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="model.Cell" project="EDAF70 Labbar" file="/REVERSI with playN/src/model/Cell.java" 
+  <class id="2" language="java" name="model.Cell" project="EDAF70 Labbar" file="/EDAF70 Labbar/src/model/Cell.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="165" y="873"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
