@@ -21,7 +21,7 @@ public class Othello {
 	private AI ai;
 	
 	public Othello() {
-		this.ai = new AI(2);
+		this.ai = new AI(1);
 	}
 	
 
@@ -87,16 +87,23 @@ public class Othello {
 				col = this.readCol(); // prompts the player for the column
 				// wanted
 			}else { // AI clause
-				Move m = ai.minimax(board);
+				Board b = board.copyBoard();
+				Move m = ai.minimax(b);
 				
-				Random r = new Random();
-				row = r.nextInt(7);
+			//	Random r = new Random();
+			//	row = r.nextInt(7);
 				// wanted
-				col =r.nextInt(7);
+			//	col =r.nextInt(7);
 				
-			//	row = m.getRow();
-			//	col=m.getCol();
+				row = m.getRow();
+				col=m.getCol();
+				System.out.print("row: "+ row+ "col: "+ col);
 			}
+			
+			board.display();
+				System.out.print("\n");
+				System.out.print("lägger drag på riktigt");	
+
 				Move move = new Move(row, col); // creates a new move
 				if (board.canSelect(move)) { // if move valid
 					this.players[turn.getTurn()].placeChip(row, col); // place

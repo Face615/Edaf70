@@ -23,6 +23,7 @@ public class AI {
 
 	public Move minimax(Board b) {
 		minimax(b, limit, true);
+		System.out.print("HELL SEGER");
 		return bestMove;
 	}
 
@@ -39,7 +40,9 @@ public class AI {
 	//		System.out.println("Max, depth is " + depth);
 			int bestValue = Integer.MIN_VALUE;
 
+
 			for (Move move : b.validMove(aiColor)) {
+				System.out.print(b.validMove(aiColor));
 				Board nb = b.copyBoard();
 				//Board newboard = nb;
 				System.out.println("Ai color: "+ aiColor);
@@ -55,7 +58,6 @@ public class AI {
 					bestValue = v;
 					if (depth == limit) {
 						bestMove = move;
-
 					}
 				}
 			}
@@ -63,7 +65,10 @@ public class AI {
 		if (!isMax) {
 		//	System.out.println("Min, depth is " + depth);
 			int bestValue = Integer.MAX_VALUE;
+
+			System.out.print(b.validMove(playerColor));
 			for (Move move : b.validMove(playerColor)) {
+				
 				Board nb = b.copyBoard();
 				//Board newboard = nb;
 				System.out.println("player color: "+ playerColor);
