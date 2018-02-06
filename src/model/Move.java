@@ -33,4 +33,20 @@ public class Move {
 	public String toString() {
 		return "["+this.row+","+this.col+"]";
 	}
+	
+	@Override
+	public boolean equals(Object other){
+	    if (other == null) {
+	    	 return false;
+	    }
+	  
+	    else if ((other instanceof Move)) {
+	    	if(this.col == (((Move) other).getCol())&& this.row== (((Move) other).getRow())) {
+	    		return true;
+	    	}
+	    }
+	  
+		return false;
+	  
+	}
 }

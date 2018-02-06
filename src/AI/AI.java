@@ -11,27 +11,39 @@ public class AI {
 		this.limit=limit;
 	}
 	
+	public Move getBestMove() {
+		return bestMove;
+	}
 	
+	// Add public method
 	public int minimax(Game g, int depth, boolean isMax) {
 		
-		if(depth ==0||g.gameOver()) {
+		if(depth <=0) {
 		return g.getAiScore()-g.getPlayerScore();
 		}
 		
-		if(isMax) {
+		else if(isMax) {
 			int maxBestV = Integer.MIN_VALUE;
 			for(Move move: g.getLegalMoves(g.getAiColor())) {
+			
+				g.display();
 				int v =minimax(g.placeChip(g.getPlayerColor(), move), depth--, false);
 				maxBestV=Integer.max(maxBestV, v);
-				bestMove = move;
+				if (maxBestV<v&& depth==limit) {
+					bestMove=move;
+				}
+				
 								
 			}
+		
 			return maxBestV;
 		}else {
 			int minBestV = Integer.MAX_VALUE;
 			for(Move move: g.getLegalMoves(g.getPlayerColor())) {
+				//g.display();
 				int v = minimax(g.placeChip(g.getAiColor(), move), depth--, true);
 				minBestV=Integer.min(minBestV, v);
+				
 			}
 			return minBestV;
 			
