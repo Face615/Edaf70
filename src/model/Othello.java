@@ -21,7 +21,7 @@ public class Othello {
 	private AI ai;
 	
 	public Othello() {
-		this.ai = new AI(3);
+		this.ai = new AI(2);
 	}
 	
 
@@ -94,8 +94,8 @@ public class Othello {
 				// wanted
 				col =r.nextInt(7);
 				
-//				row = m.getRow();
-//				col=m.getCol();
+			//	row = m.getRow();
+			//	col=m.getCol();
 			}
 				Move move = new Move(row, col); // creates a new move
 				if (board.canSelect(move)) { // if move valid

@@ -80,8 +80,17 @@ public class Board {
 
 	public Board copyBoard() {
 		Board b = new Board();
-		b.setCells(this.cells);
-		b.setCounter(this.counter);
+		for(int row =0 ; row<7;row++){
+			for(int col =0; col<7;col++){{
+				if(this.cells[row][col].getPlayer()==0){
+					b.placeChip(0,row,col);
+				}
+				if(this.cells[row][col].getPlayer()==1){
+					b.placeChip(1,row,col);
+				}
+				}
+			}
+		}
 		return b;
 	}
 	

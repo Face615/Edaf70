@@ -27,7 +27,8 @@ public class AI {
 	}
 
 	private int minimax(Board b, int depth, boolean isMax) {
-	//	b.display();
+		b.display();
+		System.out.print("depth: "+depth);
 		System.out.println(isMax);
 		if (depth == 0 || b.gameOver()) {
 			return b.getRealChipCount(aiColor) - b.getRealChipCount(playerColor);
@@ -35,16 +36,21 @@ public class AI {
 
 		if (isMax) {
 
-			System.out.println("Max, depth is " + depth);
+	//		System.out.println("Max, depth is " + depth);
 			int bestValue = Integer.MIN_VALUE;
-//			for (Move move : b.validMove(aiColor)) {
-				
-				Move move = b.validMove(aiColor).get(0);
-				Board newboard = b.copyBoard();
+
+			for (Move move : b.validMove(aiColor)) {
+				Board nb = b.copyBoard();
+				//Board newboard = nb;
 				System.out.println("Ai color: "+ aiColor);
-				newboard.placeChip(aiColor, move);
-				newboard.replaceChip(move, aiColor);
-				int v = minimax(newboard, depth - 1, false);
+				nb.display();
+
+				//System.out.println("\n \n");
+				nb.placeChip(aiColor, move);
+				nb.replaceChip(move, aiColor);
+				int v = minimax(nb, depth - 1, false);
+				//System.out.print("newboard bräda");
+				//newboard.display();
 				if (v > bestValue) {
 					bestValue = v;
 					if (depth == limit) {
@@ -52,17 +58,23 @@ public class AI {
 
 					}
 				}
-//			}
+			}
 		}
 		if (!isMax) {
-			System.out.println("Min, depth is " + depth);
+		//	System.out.println("Min, depth is " + depth);
 			int bestValue = Integer.MAX_VALUE;
 			for (Move move : b.validMove(playerColor)) {
-				Board newboard = b.copyBoard();
+				Board nb = b.copyBoard();
+				//Board newboard = nb;
 				System.out.println("player color: "+ playerColor);
-				newboard.placeChip(playerColor, move);
-				newboard.replaceChip(move, playerColor);
-				int v = minimax(newboard, depth - 1, true);
+				nb.display();
+
+				System.out.println("\n \n");
+				nb.placeChip(playerColor, move);
+				nb.replaceChip(move, playerColor);
+				int v = minimax(nb, depth - 1, true);
+				//System.out.print("newboard bräda");
+				//newboard.display();
 				if (v < bestValue) {
 					bestValue = v;
 				}
