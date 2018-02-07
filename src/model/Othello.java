@@ -90,6 +90,7 @@ public class Othello {
 				int col = 0; // pro
 			//	System.out.print("vems tur: "+ turn.getTurn() +"\n");
 			if(turn.getTurn()==1 || (turn.getTurn()==0 && cnt==1)) {
+
 				row = this.readRow(); // prompts the player for the row
 				// wanted
 				col = this.readCol(); // prompts the player for the column
@@ -98,7 +99,7 @@ public class Othello {
 			}else { // AI clause
 				Board b = board.copyBoard();
 				Move m = ai.minimax(b);
-				System.out.print("Valbaradrag för b.validMove"+ b.validMove(0));
+			//	System.out.print("Valbaradrag för b.validMove"+ b.validMove(0));
 			//	Random r = new Random();
 			//	row = r.nextInt(7);
 				// wanted
@@ -107,11 +108,7 @@ public class Othello {
 				col=m.getCol();
 				System.out.print("row: "+ row+ "col: "+ col+"\n");
 			}
-			
-			//board.display();
-				//System.out.print("\n");
-				//System.out.print(" AI lägger drag på! row: "+ row+ "col: "+ col+"\n \n");	
-
+		
 				Move move = new Move(row, col); // creates a new move
 				if (board.canSelect(move)) { // if move valid
 					this.players[turn.getTurn()].placeChip(row, col); // place
@@ -165,8 +162,7 @@ public class Othello {
 	 * @return the value of the row wanted
 	 */
 	private int readRow() {
-		System.out.print("Select a row: "); // Displays a message asking to
-											// select a row
+		
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // prompts
 																					// for
@@ -174,10 +170,24 @@ public class Othello {
 																					// of
 																					// row
 		Integer value = -1;
-		try {
-			value = Integer.parseInt(br.readLine()); // reads the value selected
-		} catch (IOException e) {
-		}
+	boolean incorrectEntry=true;
+	while(incorrectEntry) {
+		System.out.print("Select a row: "); // Displays a message asking to
+		// select a row
+			try {
+				value = Integer.parseInt(br.readLine());
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // reads the value selected
+			
+			if((value instanceof Integer)&& value>=0&&value<8) {
+				incorrectEntry = false;
+			}
+	}
 		return value; // returns the value selected
 	}
 
@@ -187,21 +197,32 @@ public class Othello {
 	 * @return the value of the column wanted
 	 */
 	private int readCol() {
-		System.out.print("Select a column: "); // Displays a message asking to
-												// select a column
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // prompts
 																					// for
 																					// input
 																					// of
-																					// column
+																					// row
 		Integer value = -1;
-		try {
-			value = Integer.parseInt(br.readLine()); // reads the value selected
-		} catch (IOException e) {
-
-		}
-		return value; // returns value selected
+	boolean incorrectEntry=true;
+	while(incorrectEntry) {
+		System.out.print("Select a Col0: "); // Displays a message asking to
+		// select a row
+			try {
+				value = Integer.parseInt(br.readLine());
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // reads the value selected
+			
+			if((value instanceof Integer)&& value>=0&&value<8) {
+				incorrectEntry = false;
+			}
+	}
+		return value; // returns the value selected
 	}
 
 	
