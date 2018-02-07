@@ -19,9 +19,10 @@ public class Othello {
 												// players
 	private Turn turn; // creates a turn
 	private AI ai;
+	private int cnt;
 	
 	public Othello() {
-		this.ai = new AI(6);
+		this.ai = new AI(3);
 	}
 	
 
@@ -40,8 +41,13 @@ public class Othello {
 	 */
 	public void startGame() throws IOException /* the game starts */{
 		
+
 		int who = this.initPlayers(); // initializes the first player
 		this.turn = new Turn((who + 1) % 2); // initializes the turn
+		
+		if(cnt==1){
+			ai.setAiColor(1);
+		}
 		
 		for (int i = 0; i < 2; i++) { // prompts both the players for their
 										// names
@@ -82,28 +88,29 @@ public class Othello {
 				int row = 0; // prompts the player for the row
 				// wanted
 				int col = 0; // pro
-			if(turn.getTurn()==0 ) {
+			//	System.out.print("vems tur: "+ turn.getTurn() +"\n");
+			if(turn.getTurn()==1 || (turn.getTurn()==0 && cnt==1)) {
 				row = this.readRow(); // prompts the player for the row
 				// wanted
 				col = this.readCol(); // prompts the player for the column
+				cnt--;
 				// wanted
 			}else { // AI clause
 				Board b = board.copyBoard();
 				Move m = ai.minimax(b);
-				
+				System.out.print("Valbaradrag för b.validMove"+ b.validMove(0));
 			//	Random r = new Random();
 			//	row = r.nextInt(7);
 				// wanted
 			//	col =r.nextInt(7);
-				
 				row = m.getRow();
 				col=m.getCol();
 				System.out.print("row: "+ row+ "col: "+ col+"\n");
 			}
 			
-			board.display();
-				System.out.print("\n");
-				System.out.print(" AI lägger drag på! row: "+ row+ "col: "+ col+"\n \n");	
+			//board.display();
+				//System.out.print("\n");
+				//System.out.print(" AI lägger drag på! row: "+ row+ "col: "+ col+"\n \n");	
 
 				Move move = new Move(row, col); // creates a new move
 				if (board.canSelect(move)) { // if move valid
@@ -143,9 +150,11 @@ public class Othello {
 		this.players[1] = new Player("name 2", aux.getTurn(), this.board); // player
 																			// 2
 
-		if (aux.getTurn() == 0) { // if player is player 1 then start with black
+		if (aux.getTurn() == 1) { // if player is player 1 then start with black
+
 			return 1;
 		} else {
+			cnt=1;
 			return 0; // start with white
 		}
 	}

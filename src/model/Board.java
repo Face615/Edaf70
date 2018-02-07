@@ -80,8 +80,8 @@ public class Board {
 
 	public Board copyBoard() {
 		Board b = new Board();
-		for(int row =0 ; row<7;row++){
-			for(int col =0; col<7;col++){{
+		for(int row =0 ; row<8;row++){
+			for(int col =0; col<8;col++){{
 				if(this.cells[row][col].getPlayer()==0){
 					b.placeChip(0,row,col);
 				}

@@ -16,13 +16,15 @@ public class Turn {
 	 * Class constructor. Creates a turn starting with a random player.
 	 */
 	public Turn() {
-		System.out.print("Wanna be the first to lay a move write 0, want the AI to begin write 1.\n");
+		System.out.print("Wanna be the first to lay a move write 1, want the AI to begin write 0.\n");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		this.value=0;
 		try{
 		this.value = Integer.parseInt(br.readLine());
 		}catch(IOException e){}
 	}
+	
+
 
 	/**
 	 * Class constructor. Creates a turn starting with the selected player.
