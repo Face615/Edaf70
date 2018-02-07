@@ -22,7 +22,7 @@ public class Othello {
 	private int cnt;
 	
 	public Othello() {
-		this.ai = new AI(3);
+		this.ai = new AI(71);
 	}
 	
 
