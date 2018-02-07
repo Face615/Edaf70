@@ -1,5 +1,9 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * Created by Samuel on 01/04/14. Updated by aeap and jgeorge on 14/05/14.
  */
@@ -12,7 +16,12 @@ public class Turn {
 	 * Class constructor. Creates a turn starting with a random player.
 	 */
 	public Turn() {
-		this.value = (int) (Math.random() * 2.0d);
+		System.out.print("Wanna be the first to lay a move write 0, want the AI to begin write 1.\n");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		this.value=0;
+		try{
+		this.value = Integer.parseInt(br.readLine());
+		}catch(IOException e){}
 	}
 
 	/**

@@ -22,15 +22,15 @@ public class AI {
 	// Add public method
 
 	public Move minimax(Board b) {
+		
 		minimax(b, limit, true);
-		System.out.print("HELL SEGER");
 		return bestMove;
 	}
 
 	private int minimax(Board b, int depth, boolean isMax) {
-		b.display();
-		System.out.print("depth: "+depth);
-		System.out.println(isMax);
+		//b.display();
+		//System.out.print("depth: "+depth);
+		//System.out.println(isMax);
 		if (depth == 0 || b.gameOver()) {
 			return b.getRealChipCount(aiColor) - b.getRealChipCount(playerColor);
 		}
@@ -42,11 +42,11 @@ public class AI {
 
 
 			for (Move move : b.validMove(aiColor)) {
-				System.out.print(b.validMove(aiColor));
+				//System.out.print(b.validMove(aiColor));
 				Board nb = b.copyBoard();
 				//Board newboard = nb;
-				System.out.println("Ai color: "+ aiColor);
-				nb.display();
+				//System.out.println("Ai color: "+ aiColor);
+				//nb.display();
 
 				//System.out.println("\n \n");
 				nb.placeChip(aiColor, move);
@@ -66,15 +66,15 @@ public class AI {
 		//	System.out.println("Min, depth is " + depth);
 			int bestValue = Integer.MAX_VALUE;
 
-			System.out.print(b.validMove(playerColor));
+			//System.out.print(b.validMove(playerColor));
 			for (Move move : b.validMove(playerColor)) {
 				
 				Board nb = b.copyBoard();
 				//Board newboard = nb;
-				System.out.println("player color: "+ playerColor);
-				nb.display();
+				//System.out.println("player color: "+ playerColor);
+				//nb.display();
 
-				System.out.println("\n \n");
+				//System.out.println("\n \n");
 				nb.placeChip(playerColor, move);
 				nb.replaceChip(move, playerColor);
 				int v = minimax(nb, depth - 1, true);

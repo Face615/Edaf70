@@ -21,7 +21,7 @@ public class Othello {
 	private AI ai;
 	
 	public Othello() {
-		this.ai = new AI(1);
+		this.ai = new AI(6);
 	}
 	
 
@@ -39,10 +39,10 @@ public class Othello {
 	 * @throws IOException
 	 */
 	public void startGame() throws IOException /* the game starts */{
-
+		
 		int who = this.initPlayers(); // initializes the first player
 		this.turn = new Turn((who + 1) % 2); // initializes the turn
-
+		
 		for (int i = 0; i < 2; i++) { // prompts both the players for their
 										// names
 			System.out.print("Player" + (i + 1) + " ");
@@ -63,6 +63,7 @@ public class Othello {
 		while (!board.gameOver()) { // when not GameOver, find the possible
 									// moves from the player
 
+
 			int count = 0; // count of possible moves
 			for (int j = 0; j < Board.NUM; j++)
 				// search the entire board
@@ -81,7 +82,7 @@ public class Othello {
 				int row = 0; // prompts the player for the row
 				// wanted
 				int col = 0; // pro
-			if(turn.getTurn()==1) {
+			if(turn.getTurn()==0 ) {
 				row = this.readRow(); // prompts the player for the row
 				// wanted
 				col = this.readCol(); // prompts the player for the column
@@ -97,12 +98,12 @@ public class Othello {
 				
 				row = m.getRow();
 				col=m.getCol();
-				System.out.print("row: "+ row+ "col: "+ col);
+				System.out.print("row: "+ row+ "col: "+ col+"\n");
 			}
 			
 			board.display();
 				System.out.print("\n");
-				System.out.print("lägger drag på riktigt");	
+				System.out.print(" AI lägger drag på! row: "+ row+ "col: "+ col+"\n \n");	
 
 				Move move = new Move(row, col); // creates a new move
 				if (board.canSelect(move)) { // if move valid
