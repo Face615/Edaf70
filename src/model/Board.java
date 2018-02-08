@@ -40,12 +40,12 @@ public class Board {
 				this.cells[i][j] = new Cell(); // sets all the cells to empty
 
 		// 1 for black starting chips
-		this.cells[3][4].placeChip(1);
-		this.cells[4][3].placeChip(1);
+		this.cells[3][4].placeChip(0);
+		this.cells[4][3].placeChip(0);
 
 		// 0 for white starting chips
-		this.cells[3][3].placeChip(0);
-		this.cells[4][4].placeChip(0);
+		this.cells[3][3].placeChip(1);
+		this.cells[4][4].placeChip(1);
 
 		// start counter at 2 for each player
 		counter[1] = 2; // black player counter

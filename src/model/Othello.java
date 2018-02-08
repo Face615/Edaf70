@@ -22,7 +22,7 @@ public class Othello {
 	private int cnt;
 	
 	public Othello() {
-		this.ai = new AI(71);
+		this.ai = new AI(3);
 	}
 	
 
@@ -41,7 +41,7 @@ public class Othello {
 	 */
 	public void startGame() throws IOException /* the game starts */{
 		
-		System.out.print("Othello AI 2000\n");
+		System.out.print("Othello AI 2000");
 		int who = this.initPlayers(); // initializes the first player
 		this.turn = new Turn((who + 1) % 2); // initializes the turn
 		
@@ -60,7 +60,7 @@ public class Othello {
 																// starting with
 																// the player
 																// whose turn it
-		turn.change();														// is
+																// is
 		this.players[turn.getTurn()].findCanSelect(); // finds the possible
 														// moves for the player
 														// playing
@@ -89,12 +89,12 @@ public class Othello {
 				// wanted
 				int col = 0; // pro
 			//	System.out.print("vems tur: "+ turn.getTurn() +"\n");
-			if(turn.getTurn()==1 && !(turn.getTurn()==1 && cnt==1)) {
+			if(turn.getTurn()==1 || (turn.getTurn()==0 && cnt==1)) {
 
 				row = this.readRow(); // prompts the player for the row
 				// wanted
 				col = this.readCol(); // prompts the player for the column
-				
+				cnt--;
 				// wanted
 			}else { // AI clause
 				Board b = board.copyBoard();
@@ -107,7 +107,6 @@ public class Othello {
 				row = m.getRow();
 				col=m.getCol();
 				System.out.print("row: "+ row+ "col: "+ col+"\n");
-				cnt--;
 			}
 		
 				Move move = new Move(row, col); // creates a new move
